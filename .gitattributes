@@ -1,0 +1,2 @@
+# For all files that git understand as a text file, the line delimiter charecter will be changed to LF (line feed)
+* text=auto eol=lf
