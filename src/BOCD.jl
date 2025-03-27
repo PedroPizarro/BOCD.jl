@@ -12,9 +12,10 @@ mutable struct BayesianOnlineChangePointDetection
   t::Int64
   beliefs::Matrix{Float64}
   runLength::Vector{Int64}
+  runLengthUncertainties::Vector{Float64}
 
   function BayesianOnlineChangePointDetection(hazard::hazard.AbstractHazardFunction, distribution::conjugateModel.AbstractConjugateModel, currentRunLengthSize::Int64, firstDataChangePointPrior::Float64)::BayesianOnlineChangePointDetection
-    return new(hazard, distribution, currentRunLengthSize, [firstDataChangePointPrior 0.0], [])
+    return new(hazard, distribution, currentRunLengthSize, [firstDataChangePointPrior 0.0], [], [])
   end
 end
 
@@ -67,10 +68,16 @@ function find_changepoints(model::BayesianOnlineChangePointDetection)
 
   # Gets the index of the most probable (maximum belief) of rₜ
   append!(model.runLength, findall(x -> x == max_val, model.beliefs[:,1]))
+  append!(model.runLengthUncertainties, max_val)
 end
 
 function get_changepoints(model::BayesianOnlineChangePointDetection)::Vector{Int64}
   return findall(all.(x -> x < 0, diff(model.runLength)))
+end
+
+function get_changepointUncertainties(model::BayesianOnlineChangePointDetection)::Vector{Float64}
+  indices = findall(all.(x -> x < 0, diff(model.runLength)))
+  return model.runLengthUncertainties[indices]
 end
 
 function _expand_belief_matrix!(model::BayesianOnlineChangePointDetection)
@@ -93,13 +100,15 @@ precompile(model, (hazard.AbstractHazardFunction, conjugateModel.AbstractConjuga
 precompile(evaluate_datum!, (BayesianOnlineChangePointDetection, Float64))
 precompile(find_changepoints, (BayesianOnlineChangePointDetection, ))
 precompile(get_changepoints, (BayesianOnlineChangePointDetection, ))
+precompile(get_changepointUncertainties, (BayesianOnlineChangePointDetection, ))
 
 
 # Export module constructor and functions
 export BayesianOnlineChangePointDetection,
-model,
-evaluate_datum!,
-get_changepoints
+       model,
+       evaluate_datum!,
+       get_changepoints,
+       get_changepointUncertainties
 
 # Export inner modules
 export conjugateModel
