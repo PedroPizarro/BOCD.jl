@@ -14,22 +14,22 @@ mutable struct BayesianOnlineChangePointDetection
   runLength::Vector{Int64}
 
   function BayesianOnlineChangePointDetection(hazard::hazard.AbstractHazardFunction, distribution::conjugateModel.AbstractConjugateModel, currentRunLengthSize::Int64, firstDataChangePointPrior::Float64)::BayesianOnlineChangePointDetection
-    return new(hazard, distribution, currentRunLengthSize, [firstDataChangePointPrior 0.0], []) 
+    return new(hazard, distribution, currentRunLengthSize, [firstDataChangePointPrior 0.0], [])
   end
 end
 
 """
-Considers that a changepoint occured right before the first datum.
+Considers that a changepoint occurred right before the first datum.
 
 The run-length is 0 and the first data changepoint prior is 1.
 """
 function model(hazard::hazard.AbstractHazardFunction, distribution::conjugateModel.AbstractConjugateModel)::BayesianOnlineChangePointDetection
-  # Part 1: Initialize 
+  # Part 1: Initialize
   return BayesianOnlineChangePointDetection(hazard, distribution, 0, 1.0)
 end
 
 #TODO: implement the recursive algorithm inside the for loop
-#TODO: implement the log probability 
+#TODO: implement the log probability
 function evaluate_datum!(model::BayesianOnlineChangePointDetection, x::Float64)
   _expand_belief_matrix!(model)
 
@@ -65,7 +65,7 @@ end
 function find_changepoints(model::BayesianOnlineChangePointDetection)
   max_val = maximum(model.beliefs[:,1])
 
-  # Gets the index of the most probable (maximum belief) of rₜ 
+  # Gets the index of the most probable (maximum belief) of rₜ
   append!(model.runLength, findall(x -> x == max_val, model.beliefs[:,1]))
 end
 
@@ -76,14 +76,14 @@ end
 function _expand_belief_matrix!(model::BayesianOnlineChangePointDetection)
   model.beliefs = vcat(model.beliefs, [0.0 0.0])  # Append new row for the next step
 
-  return nothing 
+  return nothing
 end
 
 function _shift_belief_matrix!(model::BayesianOnlineChangePointDetection)
   model.beliefs[:, 1] .= model.beliefs[:, 2]
   model.beliefs[:, 2] .= 0.0  # Reset the changepoint probabilities
 
-  return nothing 
+  return nothing
 end
 
 
@@ -97,9 +97,9 @@ precompile(get_changepoints, (BayesianOnlineChangePointDetection, ))
 
 # Export module constructor and functions
 export BayesianOnlineChangePointDetection,
-       model,       
-       evaluate_datum!,
-       get_changepoints
+model,
+evaluate_datum!,
+get_changepoints
 
 # Export inner modules
 export conjugateModel
