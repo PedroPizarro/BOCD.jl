@@ -29,7 +29,7 @@ bocdModel = bocd.model(hazardFunction, conjugateModel)
 # Note: Change 'your data' to a valid data vector
 for newDatum in your_data
    bocd.evaluate_datum!(bocdModel, newDatum)
-   bocd.find_changepoints(bocdModel)
+   bocd.evaluate_possibleChangepoints(bocdModel)
 end
 
 # Find the indices in your data where a changepoint has occurred, given your data and previously defined model parameters.

@@ -63,7 +63,7 @@ function evaluate_datum!(model::BayesianOnlineChangePointDetection, x::Float64)
   return nothing
 end
 
-function find_changepoints(model::BayesianOnlineChangePointDetection)
+function evaluate_possibleChangepoints(model::BayesianOnlineChangePointDetection)
   max_val = maximum(model.beliefs[:,1])
 
   # Gets the index of the most probable (maximum belief) of rₜ
@@ -98,7 +98,7 @@ precompile(BayesianOnlineChangePointDetection, (hazard.AbstractHazardFunction, c
 precompile(model, (hazard.AbstractHazardFunction, conjugateModel.AbstractConjugateModel))
 
 precompile(evaluate_datum!, (BayesianOnlineChangePointDetection, Float64))
-precompile(find_changepoints, (BayesianOnlineChangePointDetection, ))
+precompile(evaluate_possibleChangepoints, (BayesianOnlineChangePointDetection, ))
 precompile(get_changepoints, (BayesianOnlineChangePointDetection, ))
 precompile(get_changepointUncertainties, (BayesianOnlineChangePointDetection, ))
 
