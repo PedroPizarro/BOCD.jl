@@ -10,9 +10,9 @@ Arxiv link: https://arxiv.org/abs/0710.3742
 
 ## Usage
 ```julia
-# Import package
-include("./BOCD.jl")
-import .BOCD as bocd
+# Import package directly from git repo.
+using Pkg; Pkg.add(url="https://github.com/PedroPizarro/BOCD.jl")
+import BOCD as bocd
 
 # Choose and initialize the Hazard distribution with its hyperparameter
 # Look at HazardFunctions directory files for all existing Hazard models
