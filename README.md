@@ -10,8 +10,8 @@ Arxiv link: https://arxiv.org/abs/0710.3742
 
 ## Usage
 ```julia
-# Import package directly from git repo.
-using Pkg; Pkg.add(url="https://github.com/PedroPizarro/BOCD.jl")
+# Import package directly from git repo. Where <git-tag-version> is the desired package version
+using Pkg; Pkg.add(url="https://github.com/PedroPizarro/BOCD.jl",rev="<git-tag-version>")
 import BOCD as bocd
 
 # Choose and initialize the Hazard distribution with its hyperparameter
