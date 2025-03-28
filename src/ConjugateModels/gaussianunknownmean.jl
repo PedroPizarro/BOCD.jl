@@ -39,8 +39,8 @@ function update_runLength_hyperparameters!(x::Float64, hyperparameter::GaussianU
   # Please refer to "Conjugate Bayesian analysis of the Gaussian distribution" article from
   # "https://www.cs.ubc.ca/~murphyk/Papers/bayesGauss.pdf", Section 3 pages 6-10., eq. (20, 24)
 
-  σ²ₜ₊₁::Vector{Float64} = vcat(hyperparameter.σ²₀, (1 ./ ( (1 ./ hyperparameter.σ²ₜ₊₁) .+ (1 / hyperparameter.σ²ₓ))))
-  μₜ₊₁::Vector{Float64} = vcat(hyperparameter.μ₀, hyperparameter.σ²ₜ₊₁ .* ((hyperparameter.μ₀ / hyperparameter.σ²₀) .+ (x ./ hyperparameter.σ²ₓ)))
+  σ²ₜ₊₁::Vector{Float64} = vcat(hyperparameter.σ²₀,  1 ./(hyperparameter.σ²ₜ₊₁ .+ hyperparameter.σ²ₓ))
+  μₜ₊₁::Vector{Float64} = vcat(hyperparameter.μ₀,  σ²ₜ₊₁[end] .* ((hyperparameter.μ₀ / hyperparameter.σ²₀) .+ (x ./ hyperparameter.σ²ₜ₊₁ )))
 
   hyperparameter.μₜ₊₁ = μₜ₊₁
   hyperparameter.σ²ₜ₊₁ = σ²ₜ₊₁
