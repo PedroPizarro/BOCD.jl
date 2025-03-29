@@ -44,17 +44,11 @@ function update_runLength_hyperparameters!(x::Float64, hyperparameter::NormalUnk
   
   hyperparameter.τ²ₜ₊₁ =  τ²ₜ₊₁
   hyperparameter.μₜ₊₁ = μₜ₊₁
-  println("hyperparameter.τ²ₜ₊₁[end]: $(hyperparameter.τ²ₜ₊₁[end])\n")
-  println("hyperparameter.μₜ₊₁[end]: $(hyperparameter.μₜ₊₁[end])\n")
 end
 
 function evaluate_likelihood(x::Float64, hyperparameter::NormalUnknownMean)::Vector{Float64}
   μ =  hyperparameter.μₜ₊₁
   σ = sqrt.((1 ./hyperparameter.τ²ₜ₊₁) .+ (1 /hyperparameter.τ²ₓ)) 
-
-  println("μ: $(μ)\n")
-  println("σ: $(σ)\n")
-  println("ds.logpdf.(ds.Normal.(μ, σ),x): $(ds.logpdf.(ds.Normal.(μ, σ),x))\n")
 
   # Normal distribution evaluated at the "x" datum.
   πₜ = ds.pdf.(ds.Normal.(μ, σ), x)
