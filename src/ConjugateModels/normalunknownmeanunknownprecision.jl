@@ -15,7 +15,7 @@ import Distributions as ds
 
   β::Float64 -> models the unknown precision: rate parameter of the gamma distribution
 """
-mutable struct GaussianUnknownMeanUnknownPrecision <: AbstractConjugateModel
+mutable struct NormalUnknownMeanUnknownPrecision <: AbstractConjugateModel
   μ₀::Float64
   τ₀::Float64
   α₀::Float64 
@@ -26,12 +26,12 @@ mutable struct GaussianUnknownMeanUnknownPrecision <: AbstractConjugateModel
   αₜ₊₁::Vector{Float64}
   βₜ₊₁::Vector{Float64}
 
-  function GaussianUnknownMeanUnknownPrecision(;μ::Float64, τ::Float64, α::Float64, β::Float64)
+  function NormalUnknownMeanUnknownPrecision(;μ::Float64, τ::Float64, α::Float64, β::Float64)
       new(μ, τ, α, β, [μ], [τ], [α], [β])
   end
 end
 
-function reset_hyperparameters!(hyperparameter::GaussianUnknownMeanUnknownPrecision)
+function reset_hyperparameters!(hyperparameter::NormalUnknownMeanUnknownPrecision)
   hyperparameter.μₜ₊₁ = copy(hyperparameter.μ₀)
   hyperparameter.τₜ₊₁ = copy(hyperparameter.τ₀)  
   hyperparameter.αₜ₊₁ = copy(hyperparameter.α₀)
@@ -41,7 +41,7 @@ end
 """
 Update all run length hypotheses based on new data at time t.
 """
-function update_runLength_hyperparameters!(x::Float64, hyperparameter::GaussianUnknownMeanUnknownPrecision)
+function update_runLength_hyperparameters!(x::Float64, hyperparameter::NormalUnknownMeanUnknownPrecision)
 
   # Please refer to "Conjugate Bayesian analysis of the Gaussian distribution" article from
   # "https://www.cs.ubc.ca/~murphyk/Papers/bayesGauss.pdf", Section 3 pages 6-10., eq. (104,86,102,101)
@@ -57,7 +57,7 @@ function update_runLength_hyperparameters!(x::Float64, hyperparameter::GaussianU
   hyperparameter.αₜ₊₁ = αₜ₊₁
 end
 
-function evaluate_likelihood(x::Float64, hyperparameter::GaussianUnknownMeanUnknownPrecision)::Vector{Float64}
+function evaluate_likelihood(x::Float64, hyperparameter::NormalUnknownMeanUnknownPrecision)::Vector{Float64}
   μ =  hyperparameter.μₜ₊₁
   σ = sqrt.(hyperparameter.βₜ₊₁ .* (hyperparameter.τₜ₊₁ .+ 1) ./ (hyperparameter.αₜ₊₁ .* hyperparameter.τₜ₊₁)) 
 

@@ -1,17 +1,22 @@
 module ConjugateModels
 
 include("./abstractconjugatemodel.jl")
-include("./gaussianunknownmeanunknownprecision.jl")
-include("./gaussianunknownmean.jl")
+include("./normalunknownmeanunknownprecision.jl")
+include("./normalunknownmean.jl")
+include("./lognormalunknownmean.jl")
 
 
-precompile(GaussianUnknownMeanUnknownPrecision, (Float64, Float64, Float64, Float64))
-precompile(evaluate_likelihood, (Float64, GaussianUnknownMeanUnknownPrecision))
-precompile(update_runLength_hyperparameters!, (Float64, GaussianUnknownMeanUnknownPrecision))
+precompile(NormalUnknownMeanUnknownPrecision, (Float64, Float64, Float64, Float64))
+precompile(evaluate_likelihood, (Float64, NormalUnknownMeanUnknownPrecision))
+precompile(update_runLength_hyperparameters!, (Float64, NormalUnknownMeanUnknownPrecision))
 
-precompile(GaussianUnknownMean, (Float64, Float64, Float64))
-precompile(evaluate_likelihood, (Float64, GaussianUnknownMean))
-precompile(update_runLength_hyperparameters!, (Float64, GaussianUnknownMean))
+precompile(NormalUnknownMean, (Float64, Float64, Float64))
+precompile(evaluate_likelihood, (Float64, NormalUnknownMean))
+precompile(update_runLength_hyperparameters!, (Float64, NormalUnknownMean))
+
+precompile(LogNormalUnknownMean, (Float64, Float64, Float64))
+precompile(evaluate_likelihood, (Float64, LogNormalUnknownMean))
+precompile(update_runLength_hyperparameters!, (Float64, LogNormalUnknownMean))
 
 
 export reset_hyperparameters!,
@@ -19,7 +24,8 @@ export reset_hyperparameters!,
        evaluate_likelihood
 
 export AbstractConjugateModel,
-       GaussianUnknownMeanUnknownPrecision,
-       GaussianUnknownMean
+       NormalUnknownMeanUnknownPrecision,
+       NormalUnknownMean,
+       LogNormalUnknownMean
 
 end

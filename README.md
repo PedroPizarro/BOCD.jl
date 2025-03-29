@@ -20,7 +20,7 @@ hazardFunction = bocd.hazard.ConstantHazard(λ = 500.0)
 
 # Choose and initialize the conjugate model with its hyperparameters. 
 # Look at ConjugateModels directory files for all existing conjugate models
-conjugateModel = bocd.conjugateModel.GaussianUnknownMeanUnknownPrecision(μ = 0.0, τ = 60.0, α = 10.0, β = 100.0)
+conjugateModel = bocd.conjugateModel.NormalUnknownMeanUnknownPrecision(μ = 0.0, τ = 60.0, α = 10.0, β = 100.0)
 
 # Creates the BOCD model with the defined Hazard and conjugate model distributions
 bocdModel = bocd.model(hazardFunction, conjugateModel)
@@ -56,5 +56,5 @@ This code was heavily inspired by other BOCD implementations in Python:
 
 
 [status-image]: https://img.shields.io/badge/status-Active-brightgreen?style=flat
-[latest-image]: https://img.shields.io/badge/release-0.2.0-blue?style=flat
+[latest-image]: https://img.shields.io/badge/release-0.3.0-blue?style=flat
 [license-image]: https://img.shields.io/badge/license-LGPLv3-lightgrey?style=flat
