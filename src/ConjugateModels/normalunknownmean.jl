@@ -49,8 +49,6 @@ function update_runLength_hyperparameters!(x::Float64, hyperparameter::NormalUnk
 end
 
 function evaluate_likelihood(x::Float64, hyperparameter::NormalUnknownMean)::Vector{Float64}
-  #TODO: make this 
-
   μ =  hyperparameter.μₜ₊₁
   σ = sqrt.((1 ./hyperparameter.τ²ₜ₊₁) .+ (1 /hyperparameter.τ²ₓ)) 
 
