@@ -3,6 +3,15 @@
 
 ## Version 1
 
+### Version 0.4.0
+#### Information
+ - Tag: 0.4.0
+ - Date: 2025-05-06
+ - Release manager: Pedro Pizarro \<pedroapizarro at usp.br\>
+
+#### Changed
+- CP index logic to ((diff() <0) +1)
+
 ### Version 0.3.0
 #### Information
  - Tag: 0.3.0
