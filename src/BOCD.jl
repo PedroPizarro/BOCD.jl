@@ -73,12 +73,12 @@ function evaluate_possibleChangepoints(model::BayesianOnlineChangePointDetection
 end
 
 function get_changepoints(model::BayesianOnlineChangePointDetection)::Vector{Int64}
-  return findall(all.(x -> x < 0, diff(model.runLength)))
+  return (findall(all.(x -> x < 0, diff(model.runLength))).+1)
 end
 
 function get_changepointUncertainties(model::BayesianOnlineChangePointDetection)::Vector{Float64}
   indices = findall(all.(x -> x < 0, diff(model.runLength)))
-  return model.runLengthUncertainties[indices]
+  return model.runLengthUncertainties[indices.+1]
 end
 
 function _expand_belief_matrix!(model::BayesianOnlineChangePointDetection)
