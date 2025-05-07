@@ -59,6 +59,7 @@ function evaluate_datum!(model::BayesianOnlineChangePointDetection, x::Float64)
   _shift_belief_matrix!(model)
 
   # Increment time step (t)
+  #TODO: remove t from inside the model and receive it as a parameter?
   model.t += 1
   return nothing
 end
