@@ -56,5 +56,5 @@ This code was heavily inspired by other BOCD implementations in Python:
 
 
 [status-image]: https://img.shields.io/badge/status-Active-brightgreen?style=flat
-[latest-image]: https://img.shields.io/badge/release-0.3.0-blue?style=flat
+[latest-image]: https://img.shields.io/badge/release-0.4.0-blue?style=flat
 [license-image]: https://img.shields.io/badge/license-LGPLv3-lightgrey?style=flat
