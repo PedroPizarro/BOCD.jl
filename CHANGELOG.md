@@ -3,6 +3,19 @@
 
 ## Version 1
 
+### Version 0.3.0
+#### Information
+ - Tag: 0.3.0
+ - Date: 2025-03-29
+ - Release manager: Pedro Pizarro \<pedroapizarro at usp.br\>
+
+#### Added
+- Fixes Gaussian unknown mean with known variance conjugate model
+- LogNormal with unknown mean with known variance conjugate model
+
+#### Changed
+- minor typo errors
+
 ### Version 0.2.0
 #### Information
  - Tag: 0.2.0
